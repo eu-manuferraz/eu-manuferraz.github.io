@@ -11,19 +11,6 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
-    "numero": 4,
-    "nome": "Luminária LED de mesa",
-    "imagem": "img/luminaria.jpg",
-    "link": "https://s.shopee.com.br/SEU-LINK-4",
-    "categoria": "Casa",
-    "preco": "R$ 42,00",
-    "tags": [
-      "abajur",
-      "luz",
-      "quarto"
-    ]
-  },
-  {
     "numero": 5,
     "nome": "Escova secadora 3 em 1",
     "imagem": "img/escova.jpg",
