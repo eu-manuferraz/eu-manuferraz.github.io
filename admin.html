@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Painel · Achadinhos</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #8a8a8a;
+      --line: #ececec;
+      --soft: #f6f6f6;
+      --accent: #ee4d2d;
+      --ok: #1a7f37;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 640px; margin: 0 auto;
+      padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 80px;
+    }
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 20px; }
+    h1 { font-size: 1.4rem; letter-spacing: -0.01em; }
+    h2 { font-size: 1.05rem; margin-bottom: 14px; }
+    .top-actions { display: flex; gap: 6px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      height: 46px; padding: 0 18px; border-radius: 12px;
+      border: 1px solid var(--accent); background: var(--accent); color: #fff;
+      font: inherit; font-weight: 600; cursor: pointer; text-decoration: none;
+    }
+    .btn.ghost { background: var(--bg); color: var(--text); border-color: var(--line); }
+    .btn.sm { height: 36px; padding: 0 12px; font-size: 0.875rem; font-weight: 500; }
+    .btn.full { width: 100%; }
+    .btn:disabled { opacity: .5; cursor: default; }
+
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
+    .help { color: var(--muted); font-size: 0.875rem; margin-bottom: 14px; }
+    .help ol { padding-left: 18px; margin-top: 6px; }
+    .help li { margin-bottom: 4px; }
+    .help a { color: var(--text); }
+
+    form { display: flex; flex-direction: column; gap: 12px; }
+    label { display: flex; flex-direction: column; gap: 6px; font-size: 0.875rem; font-weight: 500; }
+    input, textarea {
+      width: 100%; border: 1px solid var(--line); border-radius: 10px;
+      background: var(--soft); padding: 12px; font: inherit; font-size: 16px; color: var(--text);
+      outline: none; -webkit-appearance: none; appearance: none;
+    }
+    input:focus, textarea:focus { border-color: var(--text); background: var(--bg); }
+    textarea { resize: vertical; }
+    .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    .actions { display: flex; gap: 8px; margin-top: 4px; }
+    .actions .btn { flex: 1; }
+
+    .foto-drop {
+      display: grid; place-items: center; aspect-ratio: 1 / 1; width: 100%; max-width: 260px;
+      margin: 0 auto 8px; border: 2px dashed var(--line); border-radius: var(--radius);
+      background: var(--soft); color: var(--muted); cursor: pointer; overflow: hidden;
+      text-align: center; padding: 0;
+    }
+    .foto-drop img { width: 100%; height: 100%; object-fit: cover; }
+
+    #btnNovo { margin-bottom: 16px; }
+    .list-head { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.85rem; margin: 8px 2px 10px; }
+    .list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .item {
+      display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center;
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 10px;
+    }
+    .item img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; background: var(--soft); }
+    .item-info strong { display: block; font-size: 0.95rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .item-info span { color: var(--muted); font-size: 0.85rem; }
+    .item-actions { grid-column: 1 / -1; display: flex; gap: 6px; }
+    .item-actions button {
+      height: 36px; min-width: 40px; padding: 0 12px; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--bg); color: var(--text);
+      font: inherit; font-size: 0.85rem; cursor: pointer;
+    }
+    .item-actions button:disabled { opacity: .35; cursor: default; }
+    .item-actions .grow { flex: 1; }
+    .item-actions .danger { color: var(--accent); }
+    .item-actions .danger.confirm { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .vazio { color: var(--muted); text-align: center; padding: 30px 0; }
+
+    details.panel summary { font-weight: 600; cursor: pointer; }
+    details.panel[open] summary { margin-bottom: 14px; }
+
+    .toast {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      max-width: calc(100% - 32px); width: max-content;
+      background: var(--text); color: #fff; padding: 12px 16px; border-radius: 12px;
+      font-size: 0.9rem; box-shadow: 0 6px 24px rgba(0,0,0,.18); z-index: 50;
+    }
+    .toast.ok { background: var(--ok); }
+    .toast.erro { background: var(--accent); }
+    body.ocupado { cursor: progress; }
+    body.ocupado button, body.ocupado input[type=submit] { pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <h1>Painel</h1>
+      <div class="top-actions">
+        <a id="verSite" class="btn ghost sm" target="_blank" rel="noopener" hidden>Ver site</a>
+        <button id="btnConfig" class="btn ghost sm" type="button" hidden>Conexão</button>
+      </div>
+    </header>
+
+    <!-- ===== Conexão com o GitHub ===== -->
+    <section id="secConfig" class="panel" hidden>
+      <h2>Conectar ao GitHub</h2>
+      <div class="help">
+        Só precisa fazer uma vez em cada aparelho.
+        <ol>
+          <li>No GitHub, abra <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Settings → Developer settings → Fine-grained tokens → Generate new token</a>.</li>
+          <li>Em <b>Repository access</b>, escolha <b>Only select repositories</b> e marque o repositório do site.</li>
+          <li>Em <b>Permissions → Contents</b>, escolha <b>Read and write</b>.</li>
+          <li>Gere o token, copie e cole abaixo.</li>
+        </ol>
+      </div>
+      <form id="formConfig">
+        <label>Usuário do GitHub <input name="owner" required autocomplete="off" autocapitalize="off" placeholder="ex: manuferraz" /></label>
+        <label>Nome do repositório <input name="repo" required autocomplete="off" autocapitalize="off" placeholder="ex: achadinhos" /></label>
+        <label>Branch <input name="branch" required value="main" autocapitalize="off" /></label>
+        <label>Token <input name="token" type="password" required autocomplete="off" placeholder="github_pat_…" /></label>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="btnEsquecer" hidden>Desconectar</button>
+          <button class="btn" type="submit">Conectar</button>
+        </div>
+      </form>
+    </section>
+
+    <main id="app" hidden>
+      <button id="btnNovo" class="btn full" type="button">+ Adicionar produto</button>
+
+      <!-- ===== Formulário de produto ===== -->
+      <section id="secForm" class="panel" hidden>
+        <h2 id="formTitulo">Novo produto</h2>
+        <form id="formProduto" novalidate>
+          <div>
+            <label class="foto-drop" for="fotoFile">
+              <img id="fotoPreview" alt="" hidden />
+              <span id="fotoHint">Toque para escolher a foto</span>
+            </label>
+            <input id="fotoFile" type="file" accept="image/*" hidden />
+            <input name="fotoUrl" type="url" placeholder="…ou cole o link de uma imagem" />
+          </div>
+          <label>Link de afiliado * <input name="link" type="url" required placeholder="https://s.shopee.com.br/…" /></label>
+          <label>Nome do produto * <input name="nome" required maxlength="90" /></label>
+          <label>Descrição <textarea name="descricao" rows="3" maxlength="300" placeholder="Opcional. Aparece na visualização de 1 coluna e ajuda na busca."></textarea></label>
+          <div class="two">
+            <label>Preço <input name="preco" placeholder="R$ 39,90" /></label>
+            <label>Número <input name="numero" type="number" min="0" inputmode="numeric" placeholder="automático" /></label>
+          </div>
+          <label>Categoria <input name="categoria" list="listaCategorias" placeholder="ex: Casa, Beleza" /></label>
+          <datalist id="listaCategorias"></datalist>
+          <label>Palavras extras para a busca <input name="tags" placeholder="separe por vírgula: make, penteadeira" /></label>
+          <div class="actions">
+            <button class="btn ghost" type="button" id="btnCancelar">Cancelar</button>
+            <button class="btn" type="submit" id="btnPublicar">Publicar</button>
+          </div>
+        </form>
+      </section>
+
+      <div class="list-head"><span id="contagem"></span><span>A ordem aqui é a ordem no site</span></div>
+      <ul id="lista" class="list"></ul>
+
+      <!-- ===== Perfil ===== -->
+      <details class="panel">
+        <summary>Editar perfil</summary>
+        <form id="formPerfil">
+          <label>Nome <input name="nome" /></label>
+          <label>Bio <input name="descricao" /></label>
+          <label>Instagram (link) <input name="instagram" type="url" placeholder="deixe vazio para esconder" /></label>
+          <label>TikTok (link) <input name="tiktok" type="url" placeholder="deixe vazio para esconder" /></label>
+          <label>Trocar foto de perfil <input name="foto" type="file" accept="image/*" /></label>
+          <button class="btn" type="submit">Salvar perfil</button>
+        </form>
+      </details>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script>
+    const CFG_KEY = "painel-achadinhos";
+    const ARQUIVO = "produtos.js";
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const norm = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "produto";
+
+    let cfg = null;
+    try { cfg = JSON.parse(localStorage.getItem(CFG_KEY)); } catch (e) {}
+    let dados = { perfil: {}, produtos: [] };
+    let sha = null;          // versão atual do produtos.js no GitHub
+    let editando = null;     // índice do produto em edição (null = novo)
+    let fotoNova = null;     // base64 da foto escolhida, já reduzida
+    let ocupado = false;
+
+    // ---------- Avisos ----------
+    let toastTimer;
+    function toast(msg, tipo = "", fixo = false) {
+      const t = $("toast");
+      t.textContent = msg;
+      t.className = "toast " + tipo;
+      t.hidden = false;
+      clearTimeout(toastTimer);
+      if (!fixo) toastTimer = setTimeout(() => (t.hidden = true), 4500);
+    }
+
+    // ---------- Base64 (com acentos) ----------
+    function b64encode(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = "";
+      for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return btoa(bin);
+    }
+    function b64decode(b64) {
+      const bin = atob(b64.replace(/\s/g, ""));
+      return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+    }
+
+    // ---------- GitHub ----------
+    async function gh(caminho, { method = "GET", body } = {}) {
+      const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}${caminho}`, {
+        method,
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${cfg.token}`,
+          Accept: "application/vnd.github+json",
+          ...(body ? { "Content-Type": "application/json" } : {}),
+        },
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      if (!r.ok) {
+        const e = new Error("HTTP " + r.status);
+        e.status = r.status;
+        try { e.detalhe = (await r.json()).message; } catch (_) {}
+        throw e;
+      }
+      return r.status === 204 ? null : r.json();
+    }
+    const conteudo = (path) => "/contents/" + path.split("/").map(encodeURIComponent).join("/");
+
+    function mensagemErro(e) {
+      if (e instanceof TypeError) return "Sem conexão com o GitHub. Verifique a internet.";
+      if (e.status === 401) return "Token inválido ou expirado. Abra “Conexão” e cole um novo.";
+      if (e.status === 403) return "O token não tem permissão de escrita (Contents: Read and write).";
+      if (e.status === 404) return "Repositório não encontrado. Confira usuário, nome e branch.";
+      if (e.status === 409 || e.status === 422) return "O site foi alterado em outro lugar. Recarreguei os dados, tente de novo.";
+      return e.message + (e.detalhe ? " — " + e.detalhe : "");
+    }
+
+    function imgSrc(src) {
+      if (!src) return "";
+      if (/^(https?:|data:)/.test(src)) return src;
+      // Fotos recém-enviadas ainda não estão no site; lê direto do repositório
+      return `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${src}`;
+    }
+
+    function urlSite() {
+      const o = cfg.owner.toLowerCase();
+      return cfg.repo.toLowerCase() === `${o}.github.io` ? `https://${o}.github.io/` : `https://${o}.github.io/${cfg.repo}/`;
+    }
+
+    // ---------- Ler / gravar produtos.js ----------
+    async function carregar() {
+      try {
+        const f = await gh(conteudo(ARQUIVO) + "?ref=" + encodeURIComponent(cfg.branch));
+        sha = f.sha;
+        const r = new Function(
+          b64decode(f.content) +
+          "\n;return { PERFIL: typeof PERFIL !== 'undefined' ? PERFIL : {}, PRODUTOS: typeof PRODUTOS !== 'undefined' ? PRODUTOS : [] };"
+        )();
+        dados = { perfil: r.PERFIL || {}, produtos: Array.isArray(r.PRODUTOS) ? r.PRODUTOS : [] };
+      } catch (e) {
+        if (e.status !== 404) throw e;
+        sha = null; // arquivo ainda não existe: será criado no primeiro salvamento
+        dados = { perfil: { nome: "", descricao: "", foto: "", instagram: "", tiktok: "" }, produtos: [] };
+      }
+      render();
+    }
+
+    function serializar() {
+      return (
+        "// Arquivo gerado pelo painel (admin.html).\n" +
+        "// Pode editar à mão, mas mantenha este formato.\n\n" +
+        "const PERFIL = " + JSON.stringify(dados.perfil, null, 2) + ";\n\n" +
+        "const PRODUTOS = " + JSON.stringify(dados.produtos, null, 2) + ";\n"
+      );
+    }
+
+    async function salvarDados(mensagem) {
+      const body = { message: mensagem, content: b64encode(serializar()), branch: cfg.branch };
+      if (sha) body.sha = sha;
+      const r = await gh(conteudo(ARQUIVO), { method: "PUT", body });
+      sha = r.content.sha;
+    }
+
+    async function enviarImagem(base64, nomeBase) {
+      const path = `img/${slug(nomeBase)}-${Date.now().toString(36)}.jpg`;
+      await gh(conteudo(path), { method: "PUT", body: { message: `Foto: ${nomeBase}`, content: base64, branch: cfg.branch } });
+      return path;
+    }
+
+    // Executa uma alteração; se falhar, desfaz localmente
+    async function acao(fn, sucesso) {
+      if (ocupado) return false;
+      ocupado = true;
+      document.body.classList.add("ocupado");
+      toast("Publicando…", "", true);
+      const antes = JSON.stringify(dados);
+      try {
+        await fn();
+        render();
+        toast(sucesso + " Aparece no site em cerca de 1 minuto.", "ok");
+        return true;
+      } catch (e) {
+        dados = JSON.parse(antes);
+        toast(mensagemErro(e), "erro");
+        if (e.status === 409 || e.status === 422) await carregar().catch(() => {});
+        return false;
+      } finally {
+        ocupado = false;
+        document.body.classList.remove("ocupado");
+      }
+    }
+
+    // ---------- Fotos: reduz no aparelho antes de enviar ----------
+    function reduzirImagem(file, max = 1000) {
+      return new Promise((ok, falha) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          const s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+          const c = document.createElement("canvas");
+          c.width = Math.round(img.naturalWidth * s);
+          c.height = Math.round(img.naturalHeight * s);
+          const ctx = c.getContext("2d");
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.drawImage(img, 0, 0, c.width, c.height);
+          URL.revokeObjectURL(url);
+          ok(c.toDataURL("image/jpeg", 0.85).split(",")[1]);
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); falha(new Error("Não consegui ler essa imagem.")); };
+        img.src = url;
+      });
+    }
+
+    // ---------- Tela ----------
+    function render() {
+      const ps = dados.produtos;
+      $("contagem").textContent = ps.length + (ps.length === 1 ? " produto" : " produtos");
+      $("lista").innerHTML = ps.length
+        ? ps.map((p, i) => `
+          <li class="item">
+            <img src="${esc(imgSrc(p.imagem))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'" />
+            <div class="item-info">
+              <strong>${p.numero != null ? "#" + esc(p.numero) + " · " : ""}${esc(p.nome)}</strong>
+              <span>${esc([p.preco, p.categoria].filter(Boolean).join(" · "))}</span>
+            </div>
+            <div class="item-actions">
+              <button type="button" data-acao="subir" data-i="${i}" ${i === 0 ? "disabled" : ""} aria-label="Mover para cima">↑</button>
+              <button type="button" data-acao="descer" data-i="${i}" ${i === ps.length - 1 ? "disabled" : ""} aria-label="Mover para baixo">↓</button>
+              <button type="button" data-acao="editar" data-i="${i}" class="grow">Editar</button>
+              <button type="button" data-acao="excluir" data-i="${i}" class="danger">Excluir</button>
+            </div>
+          </li>`).join("")
+        : `<li class="vazio">Nenhum produto ainda. Toque em “Adicionar produto”.</li>`;
+
+      const cats = [...new Set(ps.map((p) => p.categoria).filter(Boolean))];
+      $("listaCategorias").innerHTML = cats.map((c) => `<option value="${esc(c)}">`).join("");
+
+      const fp = $("formPerfil").elements;
+      ["nome", "descricao", "instagram", "tiktok"].forEach((k) => (fp[k].value = dados.perfil[k] || ""));
+    }
+
+    function mostrarConfig(mostrar) {
+      $("secConfig").hidden = !mostrar;
+      const f = $("formConfig").elements;
+      if (cfg) {
+        f.owner.value = cfg.owner; f.repo.value = cfg.repo; f.branch.value = cfg.branch; f.token.value = cfg.token;
+      }
+      $("btnEsquecer").hidden = !cfg;
+    }
+
+    function mostrarApp() {
+      $("app").hidden = false;
+      $("btnConfig").hidden = false;
+      $("verSite").hidden = false;
+      $("verSite").href = urlSite();
+    }
+
+    // ---------- Formulário de produto ----------
+    function setPreview(src) {
+      $("fotoPreview").hidden = !src;
+      $("fotoHint").hidden = !!src;
+      if (src) $("fotoPreview").src = src;
+    }
+
+    function abrirForm(i) {
+      editando = i;
+      fotoNova = null;
+      const p = i != null ? dados.produtos[i] : {};
+      const f = $("formProduto").elements;
+      $("formProduto").reset();
+      $("formTitulo").textContent = i != null ? "Editar produto" : "Novo produto";
+      $("btnPublicar").textContent = i != null ? "Salvar alterações" : "Publicar";
+      f.link.value = p.link || "";
+      f.nome.value = p.nome || "";
+      f.descricao.value = p.descricao || "";
+      f.preco.value = p.preco || "";
+      f.numero.value = p.numero ?? "";
+      f.categoria.value = p.categoria || "";
+      f.tags.value = (p.tags || []).join(", ");
+      f.fotoUrl.value = /^https?:/.test(p.imagem || "") ? p.imagem : "";
+      setPreview(imgSrc(p.imagem));
+      $("secForm").hidden = false;
+      $("btnNovo").hidden = true;
+      $("secForm").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function fecharForm() {
+      editando = null;
+      fotoNova = null;
+      $("secForm").hidden = true;
+      $("btnNovo").hidden = false;
+    }
+
+    function proximoNumero() {
+      return dados.produtos.reduce((m, p) => Math.max(m, Number(p.numero) || 0), 0) + 1;
+    }
+
+    // Remove campos vazios para manter o arquivo limpo
+    function limpar(obj) {
+      const out = {};
+      for (const [k, v] of Object.entries(obj)) {
+        if (v === undefined || v === null || v === "" || (Array.isArray(v) && !v.length)) continue;
+        out[k] = v;
+      }
+      return out;
+    }
+
+    $("btnNovo").onclick = () => abrirForm(null);
+    $("btnCancelar").onclick = fecharForm;
+
+    $("fotoFile").onchange = async (ev) => {
+      const file = ev.target.files[0];
+      if (!file) return;
+      try {
+        fotoNova = await reduzirImagem(file);
+        setPreview("data:image/jpeg;base64," + fotoNova);
+        $("formProduto").elements.fotoUrl.value = "";
+      } catch (e) {
+        toast(e.message, "erro");
+      }
+      ev.target.value = "";
+    };
+
+    $("formProduto").elements.fotoUrl.oninput = (ev) => {
+      const v = ev.target.value.trim();
+      if (v) { fotoNova = null; setPreview(v); }
+    };
+
+    $("formProduto").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const f = ev.target.elements;
+      const antigo = editando != null ? dados.produtos[editando] : null;
+      const nome = f.nome.value.trim();
+      const link = f.link.value.trim();
+      const fotoUrl = f.fotoUrl.value.trim();
+
+      if (!link || !/^https?:\/\//.test(link)) return toast("Cole o link de afiliado completo (começando com https://).", "erro");
+      if (!nome) return toast("Dê um nome ao produto.", "erro");
+      if (!fotoNova && !fotoUrl && !antigo?.imagem) return toast("Escolha uma foto do produto.", "erro");
+
+      const i = editando;
+      const ok = await acao(async () => {
+        let imagem = antigo?.imagem || "";
+        if (fotoNova) imagem = await enviarImagem(fotoNova, nome);
+        else if (fotoUrl) imagem = fotoUrl;
+
+        const numeroDigitado = f.numero.value.trim();
+        const p = limpar({
+          numero: numeroDigitado !== "" ? Number(numeroDigitado) : antigo ? undefined : proximoNumero(),
+          nome,
+          descricao: f.descricao.value.trim(),
+          imagem,
+          link,
+          categoria: f.categoria.value.trim(),
+          preco: f.preco.value.trim(),
+          tags: f.tags.value.split(",").map((t) => t.trim()).filter(Boolean),
+        });
+        if (antigo) dados.produtos[i] = p;
+        else dados.produtos.unshift(p); // novos aparecem no topo
+        await salvarDados(`${antigo ? "Editar" : "Adicionar"}: ${nome}`);
+      }, antigo ? "Produto atualizado!" : "Produto publicado!");
+      if (ok) fecharForm();
+    };
+
+    // ---------- Ações da lista ----------
+    $("lista").onclick = async (ev) => {
+      const b = ev.target.closest("button[data-acao]");
+      if (!b) return;
+      const i = Number(b.dataset.i);
+      const ps = dados.produtos;
+      const p = ps[i];
+
+      if (b.dataset.acao === "editar") return abrirForm(i);
+
+      if (b.dataset.acao === "subir" || b.dataset.acao === "descer") {
+        const j = b.dataset.acao === "subir" ? i - 1 : i + 1;
+        await acao(async () => {
+          [ps[i], ps[j]] = [ps[j], ps[i]];
+          await salvarDados(`Reordenar: ${p.nome}`);
+        }, "Ordem atualizada!");
+        return;
+      }
+
+      if (b.dataset.acao === "excluir") {
+        // Primeiro toque pede confirmação, segundo exclui
+        if (!b.classList.contains("confirm")) {
+          b.classList.add("confirm");
+          b.textContent = "Confirmar?";
+          setTimeout(() => { b.classList.remove("confirm"); b.textContent = "Excluir"; }, 3000);
+          return;
+        }
+        if (editando === i) fecharForm();
+        await acao(async () => {
+          ps.splice(i, 1);
+          await salvarDados(`Excluir: ${p.nome}`);
+        }, "Produto excluído.");
+      }
+    };
+
+    // ---------- Perfil ----------
+    $("formPerfil").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const f = ev.target.elements;
+      const arquivo = f.foto.files[0];
+      let base64 = null;
+      if (arquivo) {
+        try { base64 = await reduzirImagem(arquivo, 400); }
+        catch (e) { return toast(e.message, "erro"); }
+      }
+      const ok = await acao(async () => {
+        const perfil = { ...dados.perfil };
+        ["nome", "descricao", "instagram", "tiktok"].forEach((k) => (perfil[k] = f[k].value.trim()));
+        if (base64) perfil.foto = await enviarImagem(base64, "perfil");
+        dados.perfil = perfil;
+        await salvarDados("Atualizar perfil");
+      }, "Perfil atualizado!");
+      if (ok) f.foto.value = "";
+    };
+
+    // ---------- Conexão ----------
+    $("btnConfig").onclick = () => mostrarConfig($("secConfig").hidden);
+
+    $("btnEsquecer").onclick = () => {
+      try { localStorage.removeItem(CFG_KEY); } catch (e) {}
+      location.reload();
+    };
+
+    $("formConfig").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const f = ev.target.elements;
+      const novo = {
+        owner: f.owner.value.trim(),
+        repo: f.repo.value.trim(),
+        branch: f.branch.value.trim() || "main",
+        token: f.token.value.trim(),
+      };
+      const anterior = cfg;
+      cfg = novo;
+      toast("Conectando…", "", true);
+      try {
+        const repo = await gh("");
+        if (repo.permissions && !repo.permissions.push) throw Object.assign(new Error(), { status: 403 });
+        await carregar();
+        try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); } catch (e) {}
+        mostrarConfig(false);
+        mostrarApp();
+        toast("Conectado!", "ok");
+      } catch (e) {
+        cfg = anterior;
+        toast(mensagemErro(e), "erro");
+      }
+    };
+
+    // ---------- Início ----------
+    if (cfg) {
+      mostrarApp();
+      toast("Carregando produtos…", "", true);
+      carregar()
+        .then(() => ($("toast").hidden = true))
+        .catch((e) => { toast(mensagemErro(e), "erro"); mostrarConfig(true); });
+    } else {
+      mostrarConfig(true);
+    }
+  </script>
+</body>
+</html>
