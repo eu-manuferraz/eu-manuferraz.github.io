@@ -11,19 +11,6 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
-    "numero": 5,
-    "nome": "Escova secadora 3 em 1",
-    "imagem": "img/escova.jpg",
-    "link": "https://s.shopee.com.br/SEU-LINK-5",
-    "categoria": "Beleza",
-    "preco": "R$ 89,90",
-    "tags": [
-      "cabelo",
-      "secador",
-      "chapinha"
-    ]
-  },
-  {
     "numero": 6,
     "nome": "Kit potes herméticos de vidro",
     "imagem": "img/potes.jpg",
