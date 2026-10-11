@@ -11,18 +11,6 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
-    "numero": 2,
-    "nome": "Organizador de maquiagem acrílico",
-    "imagem": "img/organizador.jpg",
-    "link": "https://s.shopee.com.br/SEU-LINK-2",
-    "categoria": "Beleza",
-    "preco": "R$ 34,90",
-    "tags": [
-      "make",
-      "penteadeira"
-    ]
-  },
-  {
     "numero": 3,
     "nome": "Fone bluetooth sem fio",
     "imagem": "img/fone.jpg",
