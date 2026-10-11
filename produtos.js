@@ -11,18 +11,6 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
-    "numero": 3,
-    "nome": "Fone bluetooth sem fio",
-    "imagem": "img/fone.jpg",
-    "link": "https://s.shopee.com.br/SEU-LINK-3",
-    "categoria": "Eletrônicos",
-    "preco": "R$ 59,90",
-    "tags": [
-      "headphone",
-      "earbuds"
-    ]
-  },
-  {
     "numero": 4,
     "nome": "Luminária LED de mesa",
     "imagem": "img/luminaria.jpg",
