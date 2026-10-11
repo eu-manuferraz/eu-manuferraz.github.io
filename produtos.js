@@ -6,8 +6,8 @@ const PERFIL = {
   nome: "Manu Ferraz",
   descricao: "Meus achadinhos da Shopee 🧡",
   foto: "img/perfil.png", // coloque sua foto na pasta img/
-  instagram: "https://instagram.com/seuusuario", // deixe "" para esconder
-  tiktok: "https://tiktok.com/@seuusuario",      // deixe "" para esconder
+  instagram: "https://instagram.com/eu.manufer", // deixe "" para esconder
+  tiktok: "https://tiktok.com/@eu.manufer",      // deixe "" para esconder
 };
 
 // Cada produto:
