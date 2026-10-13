@@ -11,13 +11,11 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
-    "numero": 1,
     "nome": "Principia Kit Anti-Acne Trio",
     "descricao": "Principia Kit Anti-Acne Trio c/ Gel de Limpeza GL-01 + Sérum Mix-01 + Protetor Solar Facial PS-01 FPS 60",
     "imagem": "img/principia-kit-anti-acne-trio-mv4e8btw.jpg",
     "link": "https://s.shopee.com.br/9pf11tyW79",
     "categoria": "Beleza",
-    "preco": "R$122,99",
     "tags": [
       "principia",
       "kit principia",
