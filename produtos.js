@@ -22,6 +22,7 @@ const PRODUTOS = [
     ]
   },
   {
+    "numero": 2,
     "nome": "Principia Kit Anti-Acne Trio",
     "descricao": "Principia Kit Anti-Acne Trio c/ Gel de Limpeza GL-01 + Sérum Mix-01 + Protetor Solar Facial PS-01 FPS 60",
     "imagem": "img/principia-kit-anti-acne-trio-mv4e8btw.jpg",
