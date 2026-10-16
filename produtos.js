@@ -11,6 +11,20 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 7,
+    "nome": "Kit 3 Ganchos De Toalhas Para Box",
+    "descricao": "Kit 3 Gancho De Toalhas Para Box De Vidro Banheiro Casa",
+    "imagem": "img/kit-3-ganchos-de-toalhas-para-box-mvb0ymnb.jpg",
+    "link": "https://s.shopee.com.br/8fTB2iVhT2",
+    "categoria": "Casa",
+    "tags": [
+      "Kit 3 Gancho De Toalhas",
+      "Gancho para toalhas",
+      "Gancho para box",
+      "Gancho para banheiro"
+    ]
+  },
+  {
     "numero": 6,
     "nome": "Prateleira Organizadora de Banheiro com Adesivo",
     "descricao": "Suporte Porta Shampoo Prateleira Para Banheiro Organizador com Adesivo de Parede e Box Sem Furos",
