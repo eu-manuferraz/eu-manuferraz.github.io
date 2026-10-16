@@ -11,6 +11,21 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 8,
+    "nome": "Gancho Adesivo para Banheiro",
+    "descricao": "Gancho, Sem Perfuração, Gancho Resistente, Gancho de Roupas para Banheiro, Gancho Adesivo para Banheiro",
+    "imagem": "img/gancho-adesivo-para-banheiro-mvb1dhfo.jpg",
+    "link": "https://s.shopee.com.br/8fTB3UyVFH",
+    "categoria": "Casa",
+    "tags": [
+      "Gancho",
+      "Sem Perfuração",
+      "Gancho Resistente",
+      "Gancho de Roupas para Banheiro",
+      "Gancho Adesivo para Banheiro"
+    ]
+  },
+  {
     "numero": 7,
     "nome": "Kit 3 Ganchos De Toalhas Para Box",
     "descricao": "Kit 3 Gancho De Toalhas Para Box De Vidro Banheiro Casa",
