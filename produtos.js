@@ -11,6 +11,17 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 3,
+    "nome": "Porta Toalhas Toalheiro Duplo",
+    "descricao": "Porta Toalhas Toalheiro Duplo Parede Preto Fosco 45cm",
+    "imagem": "img/porta-toalhas-toalheiro-duplo-mvazsr26.jpg",
+    "link": "https://s.shopee.com.br/1LgaH2mUOx",
+    "categoria": "Casa",
+    "tags": [
+      "Porta Toalhas Toalheiro Duplo Parede"
+    ]
+  },
+  {
     "numero": 1,
     "nome": "Air Fryer Portátil Ninja Crispi",
     "descricao": "Air Fryer Portátil Ninja Crispi 4 em 1 1500w com 2 Potes de Vidro Cinza",
