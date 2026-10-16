@@ -11,6 +11,17 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 4,
+    "nome": "Organizador para Escova de Dente",
+    "descricao": "Organizador de Banheiro com Tampa Deslizante e Base Rotativa – 3 Espaços para Escovas de Dentes",
+    "imagem": "img/organizador-para-escova-de-dente-mvazydy9.jpg",
+    "link": "https://s.shopee.com.br/3qNvFu9yAl",
+    "categoria": "Casa",
+    "tags": [
+      "Organizador de Banheiro com Tampa Deslizante e Base Rotativa – 3 Espaços para Escovas de Dentes"
+    ]
+  },
+  {
     "numero": 3,
     "nome": "Porta Toalhas Toalheiro Duplo",
     "descricao": "Porta Toalhas Toalheiro Duplo Parede Preto Fosco 45cm",
