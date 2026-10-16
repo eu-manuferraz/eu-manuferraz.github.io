@@ -11,6 +11,21 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 6,
+    "nome": "Prateleira Organizadora de Banheiro com Adesivo",
+    "descricao": "Suporte Porta Shampoo Prateleira Para Banheiro Organizador com Adesivo de Parede e Box Sem Furos",
+    "imagem": "img/prateleira-organizadora-de-banheiro-com--mvb0qco1.jpg",
+    "link": "https://s.shopee.com.br/8AWuRMHyX7",
+    "categoria": "Casa",
+    "tags": [
+      "Suporte",
+      "Porta Shampoo",
+      "Prateleira Para Banheiro",
+      "Organizador para banheiro",
+      "Prateleira com Adesivo de Parede"
+    ]
+  },
+  {
     "numero": 5,
     "nome": "Prateleira de ventosa para Banheiro",
     "descricao": "Prateleira de ventosa para Banheiro Sem Perfuração Rack De Armazenamento Resistente Sobre Torneira Pia Para",
