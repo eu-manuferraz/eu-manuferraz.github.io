@@ -11,6 +11,19 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 5,
+    "nome": "Prateleira de ventosa para Banheiro",
+    "descricao": "Prateleira de ventosa para Banheiro Sem Perfuração Rack De Armazenamento Resistente Sobre Torneira Pia Para",
+    "imagem": "img/prateleira-de-ventosa-para-banheiro-mvb0fal2.jpg",
+    "link": "https://s.shopee.com.br/9zyYc559eK",
+    "categoria": "Casa",
+    "tags": [
+      "Prateleira de ventosa",
+      "prateleira para Banheiro Sem Perfuração",
+      "prateleira de pia"
+    ]
+  },
+  {
     "numero": 4,
     "nome": "Organizador para Escova de Dente",
     "descricao": "Organizador de Banheiro com Tampa Deslizante e Base Rotativa – 3 Espaços para Escovas de Dentes",
