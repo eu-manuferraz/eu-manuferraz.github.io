@@ -11,6 +11,20 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 9,
+    "nome": "Moedor de Grãos Elétrico Aço Inox",
+    "descricao": "Moedor de Café e Grãos Elétrico Aço Inox Compacto 110v 4 Lâminas",
+    "imagem": "img/moedor-de-graos-eletrico-aco-inox-mvdxyodp.jpg",
+    "link": "https://s.shopee.com.br/7pu7IrhS1V",
+    "categoria": "Cozinha",
+    "tags": [
+      "Moedor de Café",
+      "Moedor de Grãos",
+      "Moedor Elétrico",
+      "Moedor de Aço Inox"
+    ]
+  },
+  {
     "numero": 8,
     "nome": "Gancho Adesivo para Banheiro",
     "descricao": "Gancho, Sem Perfuração, Gancho Resistente, Gancho de Roupas para Banheiro, Gancho Adesivo para Banheiro",
