@@ -11,6 +11,23 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 10,
+    "nome": "Mini Umidificador Difusor Aromatizador",
+    "descricao": "Mini Umidificador Difusor Aromatizador Egg Portátil Usb Led Aromatizador De Ambiente Purificador De Ar Casa Escritório",
+    "imagem": "img/mini-umidificador-difusor-aromatizador-mvecj66z.jpg",
+    "link": "https://s.shopee.com.br/6L5JyHKxBA",
+    "categoria": "Casa",
+    "tags": [
+      "Mini Umidificador",
+      "Difusor",
+      "Aromatizador",
+      "Umidificador Portátil",
+      "Umidificador Usb",
+      "Aromatizador portatil",
+      "Purificador De Ar Casa Escritório"
+    ]
+  },
+  {
     "numero": 9,
     "nome": "Moedor de Grãos Elétrico Aço Inox",
     "descricao": "Moedor de Café e Grãos Elétrico Aço Inox Compacto 110v 4 Lâminas",
