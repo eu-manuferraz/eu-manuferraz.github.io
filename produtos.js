@@ -11,6 +11,23 @@ const PERFIL = {
 
 const PRODUTOS = [
   {
+    "numero": 11,
+    "nome": "KIT Carregador Original Cabo E Fonte",
+    "descricao": "KIT Carregador Cabo E Fonte Tipo C Lightning XR,11,12,13,14 LACRADO",
+    "imagem": "img/kit-carregador-original-cabo-e-fonte-mvekoqd0.jpg",
+    "link": "https://s.shopee.com.br/1W04T28VV2",
+    "categoria": "Eletrônicos",
+    "tags": [
+      "KIT Carregador Cabo E Fonte Tipo C Lightning XR",
+      "11",
+      "12",
+      "13",
+      "14 LACRADO",
+      "Cabo iphone",
+      "carregador iphone"
+    ]
+  },
+  {
     "numero": 10,
     "nome": "Mini Umidificador Difusor Aromatizador",
     "descricao": "Mini Umidificador Difusor Aromatizador Egg Portátil Usb Led Aromatizador De Ambiente Purificador De Ar Casa Escritório",
